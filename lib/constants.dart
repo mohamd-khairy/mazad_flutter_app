@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 const baseUrl = 'http://mazad-app.herokuapp.com/api';
 
 //api
@@ -9,6 +8,7 @@ const registerUrl = baseUrl + '/register';
 const forgetPasswordUrl = baseUrl + '/forget-password';
 const newPasswordUrl = baseUrl + '/new-password';
 const userUrl = baseUrl + '/user';
+const mazadsUrl = baseUrl + '/get-mazads';
 
 //response
 const successMsg = 'Success';

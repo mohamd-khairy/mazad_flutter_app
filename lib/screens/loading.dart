@@ -1,5 +1,3 @@
-import 'dart:ffi';
-import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:plant_app/api/api.dart';
 import 'package:plant_app/services/user_services.dart';
@@ -16,11 +14,11 @@ class _LoadingState extends State<Loading> {
     String token = await getToken();
 
     if (token == '') {
-      Navigator.of(context).pushNamed('/');
+      Navigator.of(context).pushNamed('home');
     } else {
       Api response = await getUser();
       if (response.error == null) {
-        Navigator.of(context).pushNamed('/');
+        Navigator.of(context).pushNamed('home');
       } else if (response.error == unauthorized) {
         Navigator.of(context).pushNamed('login');
       } else {

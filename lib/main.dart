@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plant_app/constants.dart';
 import 'package:plant_app/screens/home/home_screen.dart';
+import 'package:plant_app/screens/loading.dart';
 import 'package:plant_app/screens/login/login_screen.dart';
 import 'package:plant_app/screens/register/register_screen.dart';
 
@@ -23,9 +24,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/' : (context) => HomeScreen(),
-        'login' : (context) => Login(),
-        'register' : (context) => Register()
+        '/': (context) => Loading(),
+        'home': (context) => HomeScreen(),
+        'login': (context) => Login(),
+        'register': (context) => Register()
       },
     );
   }

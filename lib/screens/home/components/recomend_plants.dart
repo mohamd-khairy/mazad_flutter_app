@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:plant_app/api/api.dart';
+import 'package:plant_app/models/mazad.dart';
 import 'package:plant_app/screens/details/details_screen.dart';
+import 'package:plant_app/services/mazad_services.dart';
 
 import '../../../constants.dart';
 
@@ -8,48 +11,33 @@ class RecomendsPlants extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
+  _loadUserDetails() async {
+    Api response = await getMazads();
+    print(response.listData);
+    return response.listData;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: <Widget>[
-          RecomendPlantCard(
-            image: "assets/images/image_1.png",
-            title: "Samantha",
-            country: "Russia",
-            price: 440,
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailsScreen(),
-                ),
-              );
-            },
-          ),
-          RecomendPlantCard(
-            image: "assets/images/image_2.png",
-            title: "Angelica",
-            country: "Russia",
-            price: 440,
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailsScreen(),
-                ),
-              );
-            },
-          ),
-          RecomendPlantCard(
-            image: "assets/images/image_3.png",
-            title: "Samantha",
-            country: "Russia",
-            price: 440,
-            press: () {},
-          ),
-        ],
+        children: _loadUserDetails()
+            .map<Widget>((item) => RecomendPlantCard(
+                  image: "assets/images/image_1.png",
+                  title: "Samantha",
+                  country: "Russia",
+                  price: 440,
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailsScreen(),
+                      ),
+                    );
+                  },
+                ))
+            .toList(),
       ),
     );
   }
