@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:plant_app/api/api.dart';
-import 'package:plant_app/models/mazad.dart';
-import 'package:plant_app/screens/details/details_screen.dart';
 import 'package:plant_app/services/mazad_services.dart';
 
 import '../../../constants.dart';
 
-class RecomendsPlants extends StatelessWidget {
-  const RecomendsPlants({
-    Key key,
-  }) : super(key: key);
+class RecomendsPlants extends StatefulWidget {
+  @override
+  State<RecomendsPlants> createState() => _RecomendsPlantsState();
+}
+
+class _RecomendsPlantsState extends State<RecomendsPlants> {
+  List<dynamic> data = [];
 
   _loadUserDetails() async {
     Api response = await getMazads();
-    print(response.listData);
-    return response.listData;
+    setState(() {
+      data = response.data as List<dynamic>;
+    });
+  }
+
+  @override
+  void initState() {
+    _loadUserDetails();
+    super.initState();
   }
 
   @override
@@ -22,21 +30,16 @@ class RecomendsPlants extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: _loadUserDetails()
-            .map<Widget>((item) => RecomendPlantCard(
-                  image: "assets/images/image_1.png",
-                  title: "Samantha",
-                  country: "Russia",
-                  price: 440,
-                  press: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailsScreen(),
-                      ),
-                    );
-                  },
-                ))
+        children: data
+            .map((item) => RecomendPlantCard(
+                image: item['images'],
+                title: item['name'],
+                country: item['user']['name'],
+                price: item['price'],
+                press: () {
+                  Navigator.pushNamed(context, 'details');
+                },
+                item: item))
             .toList(),
       ),
     );
@@ -51,11 +54,13 @@ class RecomendPlantCard extends StatelessWidget {
     this.country,
     this.price,
     this.press,
+    this.item,
   }) : super(key: key);
 
-  final String image, title, country;
-  final int price;
+  final String image, title, price;
+  final String country;
   final Function press;
+  final Object item;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +74,8 @@ class RecomendPlantCard extends StatelessWidget {
       width: size.width * 0.4,
       child: Column(
         children: <Widget>[
-          Image.asset(image),
+          Image.network(image),
+          //Image.asset(image),
           GestureDetector(
             onTap: press,
             child: Container(

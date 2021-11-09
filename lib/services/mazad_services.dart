@@ -11,7 +11,7 @@ Future<Api> getMazads() async {
 
     switch (response.statusCode) {
       case 200:
-        api.listData = jsonDecode(response.body)['data'];
+        api.data = jsonDecode(response.body)['data'];
         break;
 
       case 422:
