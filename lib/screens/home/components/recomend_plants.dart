@@ -37,7 +37,8 @@ class _RecomendsPlantsState extends State<RecomendsPlants> {
                 country: item['user']['name'],
                 price: item['price'],
                 press: () {
-                  Navigator.pushNamed(context, 'details');
+                  Navigator.pushReplacementNamed(context, 'details',
+                      arguments: item);
                 },
                 item: item))
             .toList(),

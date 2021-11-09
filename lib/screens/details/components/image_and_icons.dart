@@ -5,8 +5,11 @@ import '../../../constants.dart';
 import 'icon_card.dart';
 
 class ImageAndIcons extends StatelessWidget {
+  final item;
+
   const ImageAndIcons({
     Key key,
+    this.item,
     @required this.size,
   }) : super(key: key);
 
@@ -17,7 +20,7 @@ class ImageAndIcons extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: kDefaultPadding * 3),
       child: SizedBox(
-        height: size.height * 0.8,
+        height: size.height * 0.748,
         child: Row(
           children: <Widget>[
             Expanded(
@@ -33,7 +36,7 @@ class ImageAndIcons extends StatelessWidget {
                             EdgeInsets.symmetric(horizontal: kDefaultPadding),
                         icon: SvgPicture.asset("assets/icons/back_arrow.svg"),
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pushNamed(context, '/');
                         },
                       ),
                     ),
@@ -64,7 +67,7 @@ class ImageAndIcons extends StatelessWidget {
                 image: DecorationImage(
                   alignment: Alignment.centerLeft,
                   fit: BoxFit.cover,
-                  image: AssetImage("assets/images/img.png"),
+                  image: NetworkImage(item['images']),
                 ),
               ),
             ),
