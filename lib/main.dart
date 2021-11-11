@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_app/constants.dart';
+import 'package:plant_app/screens/Mazads/mazads_screen.dart';
 import 'package:plant_app/screens/details/details_screen.dart';
 import 'package:plant_app/screens/home/home_screen.dart';
 import 'package:plant_app/screens/loading.dart';
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
         'home': (context) => HomeScreen(),
         'login': (context) => Login(),
         'register': (context) => Register(),
-        'details': (context) => DetailsScreen()
+        'details': (context) => DetailsScreen(),
+        'mazads': (context) => Mazads()
       },
     );
   }

@@ -1,28 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:plant_app/api/api.dart';
+import 'package:plant_app/services/category_services.dart';
 
 import '../../../constants.dart';
 
-class FeaturedPlants extends StatelessWidget {
+class FeaturedPlants extends StatefulWidget {
   const FeaturedPlants({
     Key key,
   }) : super(key: key);
+
+  @override
+  State<FeaturedPlants> createState() => _FeaturedPlantsState();
+}
+
+class _FeaturedPlantsState extends State<FeaturedPlants> {
+  List<dynamic> data = [];
+
+  _getCategories() async {
+    Api response = await getCategories();
+    setState(() {
+      data = response.data as List<dynamic>;
+    });
+  }
+
+  @override
+  void initState() {
+    _getCategories();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: <Widget>[
-          FeaturePlantCard(
-            image: "assets/images/bottom_img_1.png",
-            press: () {},
-          ),
-          FeaturePlantCard(
-            image: "assets/images/bottom_img_2.png",
-            press: () {},
-          ),
-        ],
-      ),
+          children: data
+              .map((item) => FeaturePlantCard(
+                    image: item['image'],
+                    press: () {
+                      Navigator.pushReplacementNamed(context, 'mazads',
+                          arguments: item);
+                    },
+                  ))
+              .toList()),
     );
   }
 }
@@ -53,7 +73,7 @@ class FeaturePlantCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage(image),
+            image: NetworkImage(image),
           ),
         ),
       ),

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:plant_app/constants.dart';
-
-import 'featurred_plants.dart';
 import 'header_with_seachbox.dart';
 import 'recomend_plants.dart';
-import 'title_with_more_bbtn.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -17,15 +13,7 @@ class Body extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           HeaderWithSearchBox(size: size),
-          TitleWithMoreBtn(
-              title: "Recomended",
-              press: () {
-                Navigator.pushNamed(context, 'mazads');
-              }),
           RecomendsPlants(),
-          TitleWithMoreBtn(title: "Categories", press: () {}),
-          FeaturedPlants(),
-          SizedBox(height: kDefaultPadding),
         ],
       ),
     );

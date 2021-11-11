@@ -9,6 +9,7 @@ const forgetPasswordUrl = baseUrl + '/forget-password';
 const newPasswordUrl = baseUrl + '/new-password';
 const userUrl = baseUrl + '/user';
 const mazadsUrl = baseUrl + '/get-mazads';
+const categoriesUrl = baseUrl + '/get-categories';
 
 //response
 const successMsg = 'Success';
