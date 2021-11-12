@@ -5,6 +5,7 @@ import 'package:plant_app/screens/details/details_screen.dart';
 import 'package:plant_app/screens/home/home_screen.dart';
 import 'package:plant_app/screens/loading.dart';
 import 'package:plant_app/screens/login/login_screen.dart';
+import 'package:plant_app/screens/profile/profile_screen.dart';
 import 'package:plant_app/screens/register/register_screen.dart';
 
 void main() {
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
         'login': (context) => Login(),
         'register': (context) => Register(),
         'details': (context) => DetailsScreen(),
-        'mazads': (context) => Mazads()
+        'mazads': (context) => Mazads(),
+        'profile': (context) => Profile()
       },
     );
   }

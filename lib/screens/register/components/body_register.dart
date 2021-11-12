@@ -237,7 +237,7 @@ class BodyRegister extends StatelessWidget {
                             Navigator.pushNamed(context, 'login');
                           },
                           child: Text(
-                            'Already Have Account',
+                            'Already Have Account? Sign in',
                             style: TextStyle(color: Colors.white),
                           )),
                     ],

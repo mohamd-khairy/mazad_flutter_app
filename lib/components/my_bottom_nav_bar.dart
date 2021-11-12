@@ -43,7 +43,7 @@ class MyBottomNavBar extends StatelessWidget {
           IconButton(
             icon: SvgPicture.asset("assets/icons/user-icon.svg"),
             onPressed: () {
-              Navigator.pushNamed(context, 'login');
+              Navigator.pushNamed(context, 'profile');
             },
           ),
         ],
