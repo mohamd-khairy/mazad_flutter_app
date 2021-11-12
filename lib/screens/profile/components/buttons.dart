@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plant_app/constants.dart';
 
 class Buttons extends StatelessWidget {
   const Buttons({
@@ -14,17 +15,6 @@ class Buttons extends StatelessWidget {
       padding: EdgeInsets.only(left: 10),
       child: Column(
         children: [
-          Row(
-            children: [
-              TextButton.icon(
-                icon: Icon(Icons.login),
-                label: Text('Join With Us!'),
-                onPressed: () {
-                  Navigator.pushNamed(context, 'login');
-                },
-              )
-            ],
-          ),
           Row(
             children: [
               TextButton.icon(
@@ -104,12 +94,33 @@ class Buttons extends StatelessWidget {
             children: [
               TextButton.icon(
                 icon: Icon(
+                  Icons.login,
+                  color: kPrimaryColor,
+                ),
+                label: Text('Join With Us!',
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17)),
+                onPressed: () {
+                  Navigator.pushNamed(context, 'login');
+                },
+              )
+            ],
+          ),
+          Row(
+            children: [
+              TextButton.icon(
+                icon: Icon(
                   Icons.logout_outlined,
                   color: Colors.red[900],
                 ),
                 label: Text(
-                  'Sign Out',
-                  style: TextStyle(color: Colors.red[900]),
+                  'Sign Out!',
+                  style: TextStyle(
+                      color: Colors.red[900],
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17),
                 ),
                 onPressed: () {},
               )
