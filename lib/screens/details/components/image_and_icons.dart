@@ -36,7 +36,7 @@ class ImageAndIcons extends StatelessWidget {
                             EdgeInsets.symmetric(horizontal: kDefaultPadding),
                         icon: SvgPicture.asset("assets/icons/back_arrow.svg"),
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pushNamed(context, '/');
                         },
                       ),
                     ),
