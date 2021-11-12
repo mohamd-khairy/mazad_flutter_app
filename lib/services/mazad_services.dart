@@ -9,19 +9,15 @@ Future<Api> getMazads() async {
     final response = await http
         .get(Uri.parse(mazadsUrl), headers: {'Accept': 'application/json'});
 
-    switch (response.statusCode) {
-      case 200:
+    switch (jsonDecode(response.body)['status']) {
+      case true:
         api.data = jsonDecode(response.body)['data'];
         break;
 
-      case 422:
-        final errors = jsonDecode(response.body);
-        api.error = errors['message'];
+      case false:
+        api.error = jsonDecode(response.body)['message'];
         break;
 
-      case 401:
-        api.error = unauthorized;
-        break;
       default:
     }
   } catch (e) {

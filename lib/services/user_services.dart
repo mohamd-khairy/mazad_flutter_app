@@ -7,7 +7,6 @@ import '../models/user_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-
 Future<Api> login(String email, String password) async {
   Api api = Api();
 
@@ -16,20 +15,15 @@ Future<Api> login(String email, String password) async {
         headers: {'Accept': 'application/json'},
         body: {'email': email, 'password': password});
 
-    switch (response.statusCode) {
-      case 200:
-        api.data = user_details.fromJson(jsonDecode(response.body));
+    switch (jsonDecode(response.body)['status']) {
+      case true:
+        api.data = user_details.fromJson(jsonDecode(response.body)['data']);
         break;
 
-      case 422:
-        // print(response.body);
-        final errors = jsonDecode(response.body);
-        api.error = errors['message'];
+      case false:
+        api.error = jsonDecode(response.body)['message'];
         break;
 
-      case 401:
-        api.error = unauthorized;
-        break;
       default:
     }
   } catch (e) {
@@ -51,20 +45,15 @@ Future<Api> register(
       'phone': phone
     });
 
-    switch (response.statusCode) {
-      case 200:
+    switch (jsonDecode(response.body)['status']) {
+      case true:
         api.data = successMsg;
         break;
 
-      case 422:
-        // print(response.body);
-        final errors = jsonDecode(response.body);
-        api.error = errors['message'];
+      case false:
+        api.error = jsonDecode(response.body)['message'];
         break;
 
-      case 401:
-        api.error = unauthorized;
-        break;
       default:
     }
   } catch (e) {
@@ -82,20 +71,16 @@ Future<Api> getUser() async {
       'Authorization': 'Bearer $token'
     });
 
-    switch (response.statusCode) {
-      case 200:
-        api.data = User.fromJson(jsonDecode(response.body));
+    switch (jsonDecode(response.body)['status']) {
+      case true:
+        api.data = User.fromJson(jsonDecode(response.body)['data']);
         break;
 
-      case 422:
-        // print(response.body);
-        final errors = jsonDecode(response.body);
-        api.error = errors['message'];
+      case false:
+        api.error = jsonDecode(response.body)['message'];
+        logout();
         break;
 
-      case 401:
-        api.error = unauthorized;
-        break;
       default:
     }
   } catch (e) {
@@ -106,6 +91,10 @@ Future<Api> getUser() async {
 
 Future<bool> logout() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
+  await pref.remove('user');
+  await pref.remove('id');
+  await pref.remove('userName');
+  await pref.remove('userImage');
   return await pref.remove('token');
 }
 
@@ -114,7 +103,23 @@ Future<String> getToken() async {
   return pref.getString('token') ?? '';
 }
 
+Future<Object> getUserData() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  final onj = pref.getString('user');
+  return jsonDecode(onj);
+}
+
 Future<int> getUserId() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
-  return pref.getInt('user_id') ?? 0;
+  return pref.getInt('id') ?? '';
+}
+
+Future<String> getUserName() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  return pref.getString('userName') ?? '';
+}
+
+Future<String> getUserImage() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  return pref.getString('userImage') ?? '';
 }

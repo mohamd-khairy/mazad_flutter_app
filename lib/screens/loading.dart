@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:plant_app/api/api.dart';
+import 'package:plant_app/models/user.dart';
 import 'package:plant_app/services/user_services.dart';
-
-import '../constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -12,18 +12,24 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   void _loadUserDetails() async {
     String token = await getToken();
-
     if (token == '') {
       Navigator.of(context).pushNamed('home');
     } else {
       Api response = await getUser();
+      User user = response.data as User;
       if (response.error == null) {
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        setState(() {
+          pref.setInt('userId', user.id ?? 0);
+          pref.setString('userName', user.name ?? ' ');
+          pref.setString('userImage', user.image ?? ' ');
+          pref.setString('userPhone', user.phone ?? ' ');
+        });
         Navigator.of(context).pushNamed('home');
-      } else if (response.error == unauthorized) {
-        Navigator.of(context).pushNamed('login');
       } else {
+        logout();
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('$response.error')));
+            .showSnackBar(SnackBar(content: Text('${response.error}')));
       }
     }
   }

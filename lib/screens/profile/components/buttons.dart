@@ -1,13 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:plant_app/constants.dart';
+import 'package:plant_app/services/user_services.dart';
 
-class Buttons extends StatelessWidget {
+class Buttons extends StatefulWidget {
   const Buttons({
     Key key,
     @required this.size,
   }) : super(key: key);
 
   final Size size;
+
+  @override
+  State<Buttons> createState() => _ButtonsState();
+}
+
+class _ButtonsState extends State<Buttons> {
+  bool loginCheck = false;
+
+  void _checkLogin() async {
+    String token = await getToken();
+
+    setState(() {
+      if (token == '') {
+        loginCheck = true;
+      } else {
+        loginCheck = false;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    _checkLogin();
+    super.initState();
+  }
+
+  Widget _buildChild() {
+    if (loginCheck) {
+      return Row(
+        children: [
+          TextButton.icon(
+            icon: Icon(
+              Icons.login,
+              color: kPrimaryColor,
+            ),
+            label: Text('Join With Us!',
+                style: TextStyle(
+                    color: kPrimaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17)),
+            onPressed: () {
+              Navigator.pushNamed(context, 'login');
+            },
+          )
+        ],
+      );
+    }
+    return Row(
+      children: [
+        TextButton.icon(
+          icon: Icon(
+            Icons.logout_outlined,
+            color: Colors.red[900],
+          ),
+          label: Text(
+            'Sign Out!',
+            style: TextStyle(
+                color: Colors.red[900],
+                fontWeight: FontWeight.bold,
+                fontSize: 17),
+          ),
+          onPressed: () {
+            logout().then((value) => Navigator.pushNamed(context, 'home'));
+          },
+        )
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,42 +159,7 @@ class Buttons extends StatelessWidget {
               color: Colors.black26,
             ),
           ),
-          Row(
-            children: [
-              TextButton.icon(
-                icon: Icon(
-                  Icons.login,
-                  color: kPrimaryColor,
-                ),
-                label: Text('Join With Us!',
-                    style: TextStyle(
-                        color: kPrimaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17)),
-                onPressed: () {
-                  Navigator.pushNamed(context, 'login');
-                },
-              )
-            ],
-          ),
-          Row(
-            children: [
-              TextButton.icon(
-                icon: Icon(
-                  Icons.logout_outlined,
-                  color: Colors.red[900],
-                ),
-                label: Text(
-                  'Sign Out!',
-                  style: TextStyle(
-                      color: Colors.red[900],
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17),
-                ),
-                onPressed: () {},
-              )
-            ],
-          ),
+          _buildChild(),
         ],
       ),
     );
