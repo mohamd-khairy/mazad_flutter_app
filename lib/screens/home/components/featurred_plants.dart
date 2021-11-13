@@ -31,19 +31,23 @@ class _FeaturedPlantsState extends State<FeaturedPlants> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-          children: data
-              .map((item) => FeaturePlantCard(
-                    image: item['image'],
-                    press: () {
-                      Navigator.pushReplacementNamed(context, 'mazads',
-                          arguments: item);
-                    },
-                  ))
-              .toList()),
-    );
+    return data.length > 0
+        ? SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+                children: data
+                    .map((item) => FeaturePlantCard(
+                          image: item['image'],
+                          press: () {
+                            Navigator.pushReplacementNamed(context, 'mazads',
+                                arguments: item);
+                          },
+                        ))
+                    .toList()),
+          )
+        : Center(
+            child: CircularProgressIndicator(),
+          );
   }
 }
 

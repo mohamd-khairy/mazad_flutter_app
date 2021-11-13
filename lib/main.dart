@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:plant_app/constants.dart';
 import 'package:plant_app/screens/Mazads/mazads_screen.dart';
 import 'package:plant_app/screens/details/details_screen.dart';
@@ -7,8 +8,13 @@ import 'package:plant_app/screens/loading.dart';
 import 'package:plant_app/screens/login/login_screen.dart';
 import 'package:plant_app/screens/profile/profile_screen.dart';
 import 'package:plant_app/screens/register/register_screen.dart';
+import 'package:plant_app/screens/search/search_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   runApp(MyApp());
 }
 
@@ -33,7 +39,8 @@ class MyApp extends StatelessWidget {
         'register': (context) => Register(),
         'details': (context) => DetailsScreen(),
         'mazads': (context) => Mazads(),
-        'profile': (context) => Profile()
+        'profile': (context) => Profile(),
+        'search': (context) => Search()
       },
     );
   }

@@ -36,7 +36,7 @@ class HeaderWithSearchBox extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Text(
-                  'Hi Uishopy!',
+                  'MaZadoOo!',
                   style: Theme.of(context).textTheme.headline5.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -70,6 +70,9 @@ class HeaderWithSearchBox extends StatelessWidget {
                   Expanded(
                     child: TextField(
                       onChanged: (value) {},
+                      onTap: () {
+                        Navigator.pushNamed(context, 'search');
+                      },
                       decoration: InputDecoration(
                         hintText: "Search",
                         hintStyle: TextStyle(
