@@ -47,7 +47,13 @@ class HeaderWithSearchBox extends StatelessWidget {
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
-                Image.asset("assets/images/logo.png")
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: CircleAvatar(
+                    radius: 35,
+                    backgroundImage: AssetImage("assets/images/image_1.png"),
+                  ),
+                )
               ],
             ),
           ),
