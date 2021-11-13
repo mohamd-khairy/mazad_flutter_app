@@ -25,3 +25,27 @@ Future<Api> getMazads() async {
   }
   return api;
 }
+
+Future<Api> getMazadComments(id) async {
+  Api api = Api();
+  String mazadId = id.toString();
+  //try {
+  final response = await http.get(Uri.parse(commentsUrl + mazadId),
+      headers: {'Accept': 'application/json'});
+  print(response.body);
+  switch (jsonDecode(response.body)['status']) {
+    case true:
+      api.data = jsonDecode(response.body)['data'];
+      break;
+
+    case false:
+      api.error = jsonDecode(response.body)['message'];
+      break;
+
+    default:
+  }
+  // } catch (e) {
+  //   api.error = serverError;
+  // }
+  return api;
+}

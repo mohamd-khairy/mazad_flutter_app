@@ -14,9 +14,9 @@ class MyBottomNavBar extends StatelessWidget {
       padding: EdgeInsets.only(
         left: kDefaultPadding * 2,
         right: kDefaultPadding * 2,
-        bottom: kDefaultPadding,
+        bottom: kDefaultPadding / 2,
       ),
-      height: 80,
+      height: 60,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -31,17 +31,28 @@ class MyBottomNavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           IconButton(
-            icon: SvgPicture.asset("assets/icons/flower.svg"),
+            icon: Icon(Icons.home),
+            color: ModalRoute.of(context).settings.name == 'home'
+                ? kPrimaryColor
+                : kSecondColor,
             onPressed: () {
               Navigator.pushNamed(context, '/');
             },
           ),
           IconButton(
-            icon: SvgPicture.asset("assets/icons/heart-icon.svg"),
-            onPressed: () {},
+            icon: Icon(Icons.search),
+            color: ModalRoute.of(context).settings.name == 'search'
+                ? kPrimaryColor
+                : kSecondColor,
+            onPressed: () {
+              Navigator.pushNamed(context, 'search');
+            },
           ),
           IconButton(
-            icon: SvgPicture.asset("assets/icons/user-icon.svg"),
+            icon: Icon(Icons.person),
+            color: ModalRoute.of(context).settings.name == 'profile'
+                ? kPrimaryColor
+                : kSecondColor,
             onPressed: () {
               Navigator.pushNamed(context, 'profile');
             },

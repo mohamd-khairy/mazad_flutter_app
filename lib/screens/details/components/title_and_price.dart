@@ -5,48 +5,108 @@ import '../../../constants.dart';
 class TitleAndPrice extends StatelessWidget {
   const TitleAndPrice({
     Key key,
-    this.title,
-    this.country,
-    this.price,
+    this.item,
   }) : super(key: key);
 
-  final String title, country, price;
+  final item;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-      child: Row(
-        children: <Widget>[
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: "$title\n",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline4
-                      .copyWith(color: kTextColor, fontWeight: FontWeight.bold),
-                ),
-                TextSpan(
-                  text: country,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: kPrimaryColor,
-                    fontWeight: FontWeight.w300,
+      padding: const EdgeInsets.all(18.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text("${item['name']}".toUpperCase(),
+                  style: Theme.of(context).textTheme.headline4),
+              Spacer(),
+              Icon(Icons.favorite)
+            ],
+          ),
+          Row(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${item['details']}",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6
+                          .copyWith(color: kPrimaryColor.withOpacity(0.5)),
+                    ),
                   ),
                 ),
-              ],
+              ),
+            ],
+          ),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text("Price: "),
+                  Text(
+                    "\$${item['price']}",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline5
+                        .copyWith(color: kPrimaryColor),
+                  ),
+                ],
+              ),
             ),
           ),
-          Spacer(),
-          Text(
-            "\$$price",
-            style: Theme.of(context)
-                .textTheme
-                .headline5
-                .copyWith(color: kPrimaryColor),
-          )
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text("Min Bid: "),
+                  Text(
+                    "\$${item['price_min_plus']}",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6
+                        .copyWith(color: kPrimaryColor),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text("Start: "),
+                  Text(
+                    " ${item['from']}",
+                    style: TextStyle(color: kPrimaryColor),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text("End: "),
+                  Text(
+                    "${item['to']}",
+                    style: TextStyle(color: kPrimaryColor),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

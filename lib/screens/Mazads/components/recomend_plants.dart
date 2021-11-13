@@ -27,27 +27,31 @@ class _RecomendsPlantsState extends State<RecomendsPlants> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Column(
-        children: data
-            .map((item) => RecomendPlantCard(
-                  image: item['images'],
-                  title: item['name'],
-                  country: item['user']['name'],
-                  price: item['price'],
-                  press: () {
-                    Navigator.pushReplacementNamed(context, 'details',
-                        arguments: item);
-                  },
-                  item: item,
-                  price_min_plus: item['price_min_plus'],
-                  date_from: item['from'],
-                  date_to: item['to'],
-                ))
-            .toList(),
-      ),
-    );
+    return data.length > 0
+        ? SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Column(
+              children: data
+                  .map((item) => RecomendPlantCard(
+                        image: item['images'],
+                        title: item['name'],
+                        country: item['user']['name'],
+                        price: item['price'],
+                        press: () {
+                          Navigator.pushReplacementNamed(context, 'details',
+                              arguments: item);
+                        },
+                        item: item,
+                        price_min_plus: item['price_min_plus'],
+                        date_from: item['from'],
+                        date_to: item['to'],
+                      ))
+                  .toList(),
+            ),
+          )
+        : Center(
+            child: CircularProgressIndicator(),
+          );
   }
 }
 

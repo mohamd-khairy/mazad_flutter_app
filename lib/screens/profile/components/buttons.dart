@@ -89,7 +89,9 @@ class _ButtonsState extends State<Buttons> {
               TextButton.icon(
                 icon: Icon(Icons.monetization_on_rounded),
                 label: Text('My Mazads'),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, 'mazads');
+                },
               )
             ],
           ),
