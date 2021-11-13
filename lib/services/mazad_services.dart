@@ -33,7 +33,7 @@ Future<Api> getMazadComments(id) async {
   try {
     final response = await http.get(Uri.parse(commentsUrl + mazadId),
         headers: {'Accept': 'application/json'});
-    print(response.body);
+
     switch (jsonDecode(response.body)['status']) {
       case true:
         api.data = jsonDecode(response.body)['data'];
@@ -64,7 +64,6 @@ Future<Api> addMazadComments(id, comment) async {
       'price': comment
     });
 
-    print(response.body);
     switch (jsonDecode(response.body)['status']) {
       case true:
         api.data = jsonDecode(response.body)['data'];

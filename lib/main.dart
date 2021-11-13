@@ -9,6 +9,7 @@ import 'package:plant_app/screens/login/login_screen.dart';
 import 'package:plant_app/screens/profile/profile_screen.dart';
 import 'package:plant_app/screens/register/register_screen.dart';
 import 'package:plant_app/screens/search/search_screen.dart';
+import 'package:plant_app/splash.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => Loading(),
+        '/': (context) => Splash(),
         'home': (context) => HomeScreen(),
         'login': (context) => Login(),
         'register': (context) => Register(),

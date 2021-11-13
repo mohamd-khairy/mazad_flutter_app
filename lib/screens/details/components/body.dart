@@ -174,7 +174,9 @@ class _BodyState extends State<Body> {
                   .toList(),
             )
           : Center(
-              child: CircularProgressIndicator(),
+              child: commentsData.length == 0
+                  ? Text("No Comments")
+                  : CircularProgressIndicator(),
             ),
     );
   }

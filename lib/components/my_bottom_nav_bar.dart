@@ -36,7 +36,7 @@ class MyBottomNavBar extends StatelessWidget {
                 ? kPrimaryColor
                 : kSecondColor,
             onPressed: () {
-              Navigator.pushNamed(context, '/');
+              Navigator.pushNamed(context, 'home');
             },
           ),
           IconButton(

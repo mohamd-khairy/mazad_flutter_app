@@ -24,6 +24,7 @@ class _BodyLoginState extends State<BodyLogin> {
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPassword = TextEditingController();
+  var loginCheck = null;
 
   void _loginFunction() async {
     Api response = await login(txtEmail.text, txtPassword.text);
@@ -33,6 +34,9 @@ class _BodyLoginState extends State<BodyLogin> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('${response.error}')));
     }
+    setState(() {
+      loginCheck = true;
+    });
   }
 
   void _saveAndRedirectToHome(user_details user) async {
@@ -189,13 +193,21 @@ class _BodyLoginState extends State<BodyLogin> {
                       color: Colors.blue[400],
                       onPressed: () {
                         if (formkey.currentState.validate()) {
+                          setState(() {
+                            loginCheck == false;
+                          });
                           _loginFunction();
                         }
                       },
-                      child: Text(
-                        "Login",
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
+                      child: loginCheck == false
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : Text(
+                              "Login",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            ),
                     ),
                   ),
                   Container(
