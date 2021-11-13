@@ -42,7 +42,7 @@ class _BodyLoginState extends State<BodyLogin> {
   void _saveAndRedirectToHome(user_details user) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('token', user.token ?? ' ');
-    Navigator.pushNamed(context, '/');
+    Navigator.pushNamed(context, 'loading');
   }
 
   @override

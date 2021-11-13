@@ -31,13 +31,13 @@ class HeaderWithSearchBox extends StatelessWidget {
                 IconButton(
                   icon: SvgPicture.asset("assets/icons/back_arrow.svg"),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/');
+                    Navigator.pushNamed(context, 'loading');
                   },
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 28.0),
                   child: Text(
-                    'Hi Uishopy!',
+                    'All Mazads',
                     style: Theme.of(context).textTheme.headline5.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
