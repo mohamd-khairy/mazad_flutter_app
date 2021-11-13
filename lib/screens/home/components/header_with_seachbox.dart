@@ -13,6 +13,12 @@ class HeaderWithSearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+
     return Container(
       margin: EdgeInsets.only(bottom: kDefaultPadding * 2.5),
       // It will cover 20% of our total height
@@ -69,7 +75,11 @@ class HeaderWithSearchBox extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
-                      onChanged: (value) {},
+                      autofocus: false,
+                      onChanged: (value) {
+                        Navigator.pushNamed(context, 'search',
+                            arguments: value);
+                      },
                       onTap: () {
                         Navigator.pushNamed(context, 'search');
                       },

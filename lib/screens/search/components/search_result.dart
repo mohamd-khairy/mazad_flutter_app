@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:plant_app/api/api.dart';
 import 'package:plant_app/services/mazad_services.dart';
 
@@ -11,11 +12,21 @@ class SearchResult extends StatefulWidget {
 
 class _SearchResultState extends State<SearchResult> {
   List<dynamic> data = [];
+  List filterData = [];
 
   _loadUserDetails() async {
     Api response = await getMazads();
     setState(() {
-      data = response.data as List<dynamic>;
+      data = filterData = response.data as List<dynamic>;
+    });
+  }
+
+  _filterBySearchText(value) {
+    setState(() {
+      filterData = data
+          .where((element) =>
+              element['name'].toLowerCase().contains(value.toLowerCase()))
+          .toList();
     });
   }
 
@@ -29,36 +40,101 @@ class _SearchResultState extends State<SearchResult> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 20.0),
-      child: Container(
-        height: size.height * 0.8,
-        child: data.length > 0
-            ? GridView.count(
-                scrollDirection: Axis.vertical,
-                crossAxisCount: 2,
-                children: data
-                    .map((item) => RecomendPlantCard(
-                          image: item['images'],
-                          title: item['name'],
-                          country: item['user']['name'],
-                          price: item['price'],
-                          press: () {
-                            Navigator.pushReplacementNamed(context, 'details',
-                                arguments: item);
-                          },
-                          item: item,
-                          price_min_plus: item['price_min_plus'],
-                          date_from: item['from'],
-                          date_to: item['to'],
-                        ))
-                    .toList(),
-              )
-            : Center(
-                child: CircularProgressIndicator(),
+    final item = ModalRoute.of(context).settings.arguments ?? '';
+
+    return ListView(children: [
+      Container(
+        // It will cover 20% of our total height
+        height: size.height * 0.1,
+        child: Stack(
+          children: <Widget>[
+            Container(
+              height: size.height * 0.1,
+              decoration: BoxDecoration(
+                color: kPrimaryColor,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(36),
+                  bottomRight: Radius.circular(36),
+                ),
               ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.symmetric(
+                  horizontal: kDefaultPadding, vertical: kDefaultPadding),
+              padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              height: 54,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, 10),
+                    blurRadius: 50,
+                    color: kPrimaryColor.withOpacity(0.23),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TextFormField(
+                      initialValue: item,
+                      onChanged: (value) {
+                        _filterBySearchText(value);
+                      },
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        hintText: "Search",
+                        hintStyle: TextStyle(
+                          color: kPrimaryColor.withOpacity(0.5),
+                        ),
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        // surffix isn't working properly  with SVG
+                        // thats why we use row
+                        // suffixIcon: SvgPicture.asset("assets/icons/search.svg"),
+                      ),
+                    ),
+                  ),
+                  SvgPicture.asset("assets/icons/search.svg"),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
-    );
+      Padding(
+        padding: const EdgeInsets.only(top: 20.0),
+        child: Container(
+          height: size.height * 0.8,
+          child: filterData.length > 0
+              ? GridView.count(
+                  scrollDirection: Axis.vertical,
+                  crossAxisCount: 2,
+                  children: filterData
+                      .map((item) => RecomendPlantCard(
+                            image: item['images'],
+                            title: item['name'],
+                            country: item['user']['name'],
+                            price: item['price'],
+                            press: () {
+                              Navigator.pushReplacementNamed(context, 'details',
+                                  arguments: item);
+                            },
+                            item: item,
+                            price_min_plus: item['price_min_plus'],
+                            date_from: item['from'],
+                            date_to: item['to'],
+                          ))
+                      .toList(),
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
+                ),
+        ),
+      ),
+    ]);
   }
 }
 
